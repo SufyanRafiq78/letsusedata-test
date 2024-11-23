@@ -10,7 +10,7 @@ using OpenQA.Selenium.Support.UI;
 namespace SeleniumTests
 {
     [TestFixture]
-    public class Unsuccessful
+    public class Successful
     {
         private IWebDriver driver;
         private StringBuilder verificationErrors;
@@ -40,7 +40,7 @@ namespace SeleniumTests
         }
         
         [Test]
-        public void TheUnsuccessfulTest()
+        public void TheSuccessfulTest()
         {
             driver.Navigate().GoToUrl("https://letsusedata.com/index.html");
             driver.FindElement(By.Id("txtUser")).Click();
@@ -48,17 +48,10 @@ namespace SeleniumTests
             driver.FindElement(By.Id("txtUser")).SendKeys("test1");
             driver.FindElement(By.Id("txtPassword")).Click();
             driver.FindElement(By.Id("txtPassword")).Clear();
-            driver.FindElement(By.Id("txtPassword")).SendKeys("test1234");
+            driver.FindElement(By.Id("txtPassword")).SendKeys("Test12456");
             driver.FindElement(By.Id("javascriptLogin")).Click();
-            // Warning: verifyTextPresent may require manual changes
-            try
-            {
-                Assert.IsTrue(Regex.IsMatch(driver.FindElement(By.CssSelector("BODY")).Text, "^[\\s\\S]*Password was incorrect[\\s\\S]*$"));
-            }
-            catch (AssertionException e)
-            {
-                verificationErrors.Append(e.Message);
-            }
+            driver.Navigate().GoToUrl("https://letsusedata.com/CourseSelection.html");
+            Assert.AreEqual("Test12", driver.FindElement(By.Id("top-bar-student-name")).Text);
         }
         private bool IsElementPresent(By by)
         {
